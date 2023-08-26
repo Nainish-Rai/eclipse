@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
+import AuthProvider from "@/context/AuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,12 +15,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { data: session, status } = useSession();
   return (
     <html lang="en" className="dark">
-      <SessionProvider session={session}>
+      <AuthProvider>
         <body className={inter.className}>{children}</body>
-      </SessionProvider>
+      </AuthProvider>
     </html>
   );
 }

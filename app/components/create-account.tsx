@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 export function CreateAccount() {
   const handleLogin = () => {
-    console.log("Login");
+    signIn("google");
   };
   return (
     <Card className="shadow-lg backdrop-blur-sm bg-black/60 shadow-black/40 w-96 rounded-xl">
