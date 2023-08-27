@@ -1,22 +1,23 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import GeneratedImages from "../components/GeneratedImages";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 function Studio({}: Props) {
-  const { data } = useSession();
+  const router = useRouter();
+  const { data: session } = useSession();
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState("midjourney");
-  console.log(model);
+
   const [imagesCount, setImagesCount] = useState(3);
   const [selectedStyle, setSelectedStyle] = useState("");
-  console.log(imagesCount);
 
   const models = ["midjourney", "sdxl", "dall-e", "kandinsky"];
   const styles = [
@@ -29,14 +30,20 @@ function Studio({}: Props) {
     "Vaporware",
     "Pixel Art",
   ];
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  }, [router, session]);
   return (
     <main className="w-full h-screen bg-[url('../public/hero.png')]  ">
-      <section className="w-full max-w-7xl mx-auto">
-        <Navbar isSignedIn={data?.user!} />
+      <section className="w-full h-screen max-w-7xl mx-auto">
+        <Navbar isSignedIn={session!} />
         {/* content */}
-        <div className="w-full  p-2 pt-6 flex flex-col lg:flex-row space-x-4 items-center">
+        <div className="w-full  p-2  flex flex-col lg:flex-row space-x-4 items-center">
           {/* Left side */}
-          <div className="lg:h-[39rem] pb-6 lg:w-[33%] w-full flex flex-col sm:flex-row space-x-2 lg:flex-col p-4 bg-neutral-900/50  backdrop-blur rounded-3xl">
+          <div className="lg:h-[50%] pb-6 lg:w-[33%] w-full flex flex-col sm:flex-row space-x-2 lg:flex-col p-4 bg-neutral-900/50  backdrop-blur rounded-3xl">
             <div className="w-full">
               <h3 className="pl-2  ">Imagine</h3>
               <form>
@@ -59,7 +66,7 @@ function Studio({}: Props) {
                   <Badge
                     className={` ${
                       model === item ? "bg-neutral-700" : ""
-                    } cursor-pointer hover:bg-neutral-800 mx-1 p-2 px-4`}
+                    } cursor-pointer hover:bg-neutral-800 m-1 p-2 px-4`}
                     variant="outline"
                     onClick={() => {
                       model === item ? setModel("") : setModel(item);
@@ -115,6 +122,7 @@ function Studio({}: Props) {
             </div>
           </div>
           {/* Right side */}
+
           <GeneratedImages content={models} />
         </div>
       </section>

@@ -9,13 +9,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { signOut, signIn } from "next-auth/react";
+import { Session } from "next-auth";
 
 type Props = {
-  isSignedIn?: {
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-  };
+  isSignedIn?: Session;
 };
 
 function Navbar({ isSignedIn }: Props) {
@@ -49,16 +46,16 @@ function Navbar({ isSignedIn }: Props) {
             {isSignedIn ? (
               <div className="flex items-center px-4 p-2 space-x-2">
                 <div className="relative w-7 aspect-square">
-                  {isSignedIn?.image && (
+                  {isSignedIn?.user?.image && (
                     <Image
-                      src={isSignedIn?.image}
+                      src={isSignedIn?.user?.image}
                       alt="pfp"
                       fill
                       className="rounded-full"
                     />
                   )}
                 </div>
-                <h3>{isSignedIn?.name}</h3>
+                <h3>{isSignedIn?.user?.name}</h3>
               </div>
             ) : (
               <div
