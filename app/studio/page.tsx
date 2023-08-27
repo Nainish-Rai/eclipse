@@ -7,6 +7,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import GeneratedImages from "../components/GeneratedImages";
 import { useRouter } from "next/navigation";
+import { useQuery, gql, useMutation } from "@apollo/client";
 
 type Props = {};
 
@@ -18,6 +19,11 @@ function Studio({}: Props) {
 
   const [imagesCount, setImagesCount] = useState(3);
   const [selectedStyle, setSelectedStyle] = useState("");
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  }, [router, session]);
 
   const models = ["midjourney", "sdxl", "dall-e", "kandinsky"];
   const styles = [
@@ -31,11 +37,23 @@ function Studio({}: Props) {
     "Pixel Art",
   ];
 
-  useEffect(() => {
-    if (!session) {
-      router.push("/");
+  const INCREMENT_COUNTER = gql`
+    mutation GenerateImages($input: ImageGenerationInput!) {
+      generateImages(input: $input) {
+        prompt
+        url
+        model
+      }
     }
-  }, [router, session]);
+  `;
+  const [generateImages, { data, loading, error }] =
+    useMutation(INCREMENT_COUNTER);
+
+  console.log(data);
+
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
+
   return (
     <main className="w-full h-screen bg-[url('../public/hero.png')]  ">
       <section className="w-full h-screen max-w-7xl mx-auto">
