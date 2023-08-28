@@ -24,10 +24,12 @@ function Navbar({ isSignedIn }: Props) {
     signIn("google");
   };
   return (
-    <nav className="w-full flex items-center justify-between p-2">
-      <h1 className=" text-2xl">Eclipse</h1>
+    <nav className="w-full  h-[8%] flex items-center justify-between p-2">
+      <h1 className=" text-lg  bg-neutral-900/60 border  backdrop-blur rounded-full  px-6 p-2 ">
+        Eclipse
+      </h1>
       <div className="hidden md:flex">
-        <ul className="flex  bg-neutral-900/60  backdrop-blur rounded-full px-6 p-2 space-x-12">
+        <ul className="flex  bg-neutral-900/60 border  backdrop-blur rounded-full px-6 p-2 space-x-12">
           <li className="cursor-pointer hover:text-pink-600 duration-150">
             Home
           </li>
@@ -42,7 +44,7 @@ function Navbar({ isSignedIn }: Props) {
       <div>
         {/* right side */}
         <div className="flex space-x-2">
-          <div className="flex items-center bg-neutral-900/60 backdrop-blur rounded-full ">
+          <div className="flex items-center border bg-neutral-900/60 backdrop-blur rounded-full ">
             {isSignedIn ? (
               <div className="flex items-center px-4 p-2 space-x-2">
                 <div className="relative w-7 aspect-square">
@@ -59,7 +61,7 @@ function Navbar({ isSignedIn }: Props) {
               </div>
             ) : (
               <div
-                className="px-4 p-2 bg-white/80 backdrop-blur-sm rounded-full text-black cursor-pointer hover:text-pink-600"
+                className="px-4 p-2 bg-white/80 border backdrop-blur-sm rounded-full text-black cursor-pointer hover:text-pink-600"
                 onClick={handleSignIn}
               >
                 Sign in
@@ -67,10 +69,10 @@ function Navbar({ isSignedIn }: Props) {
             )}
           </div>
           <DropdownMenu>
-            <DropdownMenuTrigger className=" hover:text-pink-600 duration-150 bg-neutral-900/60 backdrop-blur rounded-full aspect-square px-3 outline-none">
+            <DropdownMenuTrigger className=" hover:text-pink-600 duration-150 border bg-neutral-900/60 backdrop-blur rounded-full aspect-square px-3 outline-none">
               <ChevronDown />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="mt-2 lg:mr-24 mr-2 rounded-xl p-2  bg-neutral-900/50">
+            <DropdownMenuContent className="mt-2 lg:mr-14  mr-2 rounded-xl p-2  bg-neutral-900/50">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="cursor-pointer">
