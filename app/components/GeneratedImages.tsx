@@ -1,21 +1,23 @@
 import Image from "next/image";
 type Props = {
-  content: string[];
+  isLoading: boolean;
+  content: {
+    url: string;
+  }[];
 };
 
-function GeneratedImages({ content }: Props) {
+function GeneratedImages({ content, isLoading }: Props) {
   return (
-    <div className="bg-neutral-900/50 w-full lg:w-[70%] backdrop-blur mt-4 lg:mt-0 rounded-3xl p-6 h-[39rem] ">
+    <div className="bg-neutral-900/50 w-full lg:w-[70%] backdrop-blur mt-4 lg:mt-0 rounded-3xl p-6 h-[39rem] overflow-y-scroll ">
       GeneratedImages
-      <div className="flex flex-wrap mt-4">
+      {isLoading && <div className="animate-pulse flex space-x-4">Loading</div>}
+      <div className="flex  flex-wrap-reverse mt-4">
         {content.map((item) => {
           return (
-            <div className=" lg:w-1/3 md:w-1/2 w-full h-64  p-2" key={item}>
-              <div className="relative w-full h-full">
+            <div className=" lg:w-1/3 md:w-1/2 w-full h-64  p-2" key={item.url}>
+              <div className="relative w-full aspect-square">
                 <Image
-                  src={
-                    "https://images.pexels.com/photos/17483909/pexels-photo-17483909/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-the-concept-of-artificial-general-intelligence-agi-and-the-potential-of-generative-ai-it-was-created-by-d.png?auto=compress&cs=tinysrgb&w=600"
-                  }
+                  src={item.url}
                   alt="image"
                   className="rounded-2xl"
                   fill

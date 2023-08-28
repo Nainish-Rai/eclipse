@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import GeneratedImages from "../components/GeneratedImages";
 import { useRouter } from "next/navigation";
 import { useQuery, gql, useMutation } from "@apollo/client";
+import axios from "axios";
 
 type Props = {};
 
@@ -15,17 +16,21 @@ function Studio({}: Props) {
   const router = useRouter();
   const { data: session } = useSession();
   const [prompt, setPrompt] = useState("");
-  const [model, setModel] = useState("midjourney");
+  const [model, setModel] = useState("kandinsky-2.2");
+  const [quality, setQuality] = useState("512x512");
+  const [loading, setLoading] = useState(false);
 
   const [imagesCount, setImagesCount] = useState(3);
   const [selectedStyle, setSelectedStyle] = useState("");
+
+  const [generatedImagesArray, setGeneratedImagesArray] = useState([]);
   useEffect(() => {
     if (!session) {
       router.push("/");
     }
   }, [router, session]);
 
-  const models = ["midjourney", "sdxl", "dall-e", "kandinsky"];
+  const models = ["kandinsky-2.2", "timeless", "sdxl", "reliberate", "DALL-E"];
   const styles = [
     "Steampunk",
     "Gothic",
@@ -37,22 +42,26 @@ function Studio({}: Props) {
     "Pixel Art",
   ];
 
-  const INCREMENT_COUNTER = gql`
-    mutation GenerateImages($input: ImageGenerationInput!) {
-      generateImages(input: $input) {
-        prompt
-        url
-        model
-      }
+  const generateImages = async () => {
+    const reqBody = {
+      model: model,
+      n: imagesCount,
+      prompt: `${prompt} in ${selectedStyle} style`,
+      // size: quality,
+    };
+    if (prompt === "") {
+      alert("Please enter a prompt");
+      return;
     }
-  `;
-  const [generateImages, { data, loading, error }] =
-    useMutation(INCREMENT_COUNTER);
+    setLoading(true);
 
-  console.log(data);
-
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
+    console.log(reqBody);
+    await axios.post("api/imagesgeneration", reqBody).then((res) => {
+      console.log(res.data.data);
+      setGeneratedImagesArray((prev) => prev.concat(res.data.data));
+      setLoading(false);
+    });
+  };
 
   return (
     <main className="w-full h-screen bg-[url('../public/hero.png')]  ">
@@ -133,7 +142,10 @@ function Studio({}: Props) {
                 />
               </div>
               <div className="mt-6">
-                <Button className="w-full mx-1 bg-white/10 text-white hover:bg-white/20">
+                <Button
+                  onClick={generateImages}
+                  className="w-full mx-1 bg-white/10 text-white hover:bg-white/20"
+                >
                   Generate
                 </Button>
               </div>
@@ -141,7 +153,7 @@ function Studio({}: Props) {
           </div>
           {/* Right side */}
 
-          <GeneratedImages content={models} />
+          <GeneratedImages isLoading={loading} content={generatedImagesArray} />
         </div>
       </section>
     </main>

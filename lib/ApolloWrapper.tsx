@@ -7,7 +7,7 @@ import {
 } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "https://flyby-router-demo.herokuapp.com/",
+  uri: "https://livethecodedemo-production.up.railway.app/",
   cache: new InMemoryCache(),
 });
 export default function ApolloWrapper({
