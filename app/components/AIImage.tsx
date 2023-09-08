@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { GoDesktopDownload } from "react-icons/go";
-import { Cloudinary } from "@cloudinary/url-gen";
 import axios from "axios";
 
 interface AIImageProps {
@@ -45,9 +44,10 @@ export default function AIImage({url, prompt}: AIImageProps) {
         axios.post("api/upload_image", reqBody)
             .then(res => {
                 console.log(res.data)
+                alert("Save successfull")
                 setSaved(true)
             })
-            .catch(err => alert(`Save Error: ${err}`))
+            .catch(err => alert(`Save Error: failed to save, Image expired`))
     }
 
     console.log({url})
@@ -78,7 +78,7 @@ export default function AIImage({url, prompt}: AIImageProps) {
             <Image
               src={url}
               alt={prompt}
-              className="rounded-2xl"
+              className="rounded-2xl w-full"
               width={240}
               height={240}
             />

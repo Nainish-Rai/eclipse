@@ -4,7 +4,7 @@ import prisma from "@/lib/prismadb";
 
 export async function POST(request: NextRequest) {
     const body = await request.json()
-    let { url, prompt } = body;
+    let { url, prompt, user_id } = body;
 
     if (!url) {
         return new NextResponse("Missing Fields", { status: 400 })
@@ -17,18 +17,24 @@ export async function POST(request: NextRequest) {
     })
 
     let res = await cloud.uploader.upload(url);
-    let image = prisma.image.create({
+    let user = user_id ? await prisma.user.findUnique({
+        where: {
+            id: user_id
+        }
+    }): null
+
+    let image = await prisma.image.create({
         data: {
-            url: res.url,
+            url: res.secure_url,
             public_id: res.public_id,
+            desc: prompt,
+            user_id: user?.id,
         }
     })
-    let imageDetails = {
-        url: res.secure_url,
-        public_id: res.public_id,
-        placeholder: res.placeholder,
-        desc: prompt
+    let imageResponse = {
+        ...image,
+        user
     }
 
-    return NextResponse.json(imageDetails)
+    return NextResponse.json(imageResponse)
 }

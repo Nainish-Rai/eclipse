@@ -6,15 +6,12 @@ import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import GeneratedImages from "../components/GeneratedImages";
-import { useRouter } from "next/navigation";
-import { useQuery, gql, useMutation } from "@apollo/client";
 import axios from "axios";
 import { AIGeneration } from "@/lib/types";
 
 type Props = {};
 
 function Studio({}: Props) {
-  const router = useRouter();
   const { data: session } = useSession();
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState("kandinsky-2.2");
@@ -47,7 +44,7 @@ function Studio({}: Props) {
     let fullPrompt = prompt !== "" ?
         `${prompt} ${selectedStyle !== "" ? "in " + selectedStyle + " style": ""}`
         :"";
-    setPrompt(fullPrompt)
+    setPrompt(prompt)
 
     const reqBody = {
       model: model,
@@ -64,7 +61,7 @@ function Studio({}: Props) {
     await axios.post("api/imagesgeneration", reqBody).then((res) => {
       setAiGenerations((prev) => {
         let newGen: AIGeneration = {
-            prompt,
+            prompt: fullPrompt,
             generated: res.data.data
         };
         return [newGen, ...prev]

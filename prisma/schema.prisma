@@ -47,7 +47,6 @@ model Image {
     id          String  @id @default(auto()) @map("_id") @db.ObjectId
     url         String
     public_id   String
-    placeholder String? @db.String
     desc        String? @db.String
     user_id     String?  @db.ObjectId
 
