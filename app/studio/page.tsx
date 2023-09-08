@@ -79,7 +79,12 @@ function Studio({}: Props) {
         <div className="w-full lg:h-[92%] h-full m-0 p-1  pb-4  ">
           <div className=" flex flex-col h-full  lg:flex-row  gap-2 items-center">
             {/* Left side */}
-            <div className="lg:h-full border pb-6 lg:w-[33%] w-full flex flex-col sm:flex-row space-x-2 lg:flex-col p-4 bg-neutral-900/50  backdrop-blur rounded-3xl">
+            <div className={`
+                    lg:h-full max-h-[90vh] overflow-auto
+                    border pb-6 lg:w-[33%] w-full
+                    flex flex-col sm:flex-row space-x-2 lg:flex-col p-4
+                    bg-neutral-900/50  backdrop-blur rounded-3xl
+                `}>
               <div className="w-full">
                 <h3 className="pl-2  ">Imagine</h3>
                 <form>

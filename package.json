@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
-    "prisma": "^5.2.0"
+    "prisma": "^5.2.0",
+    "tailwind-scrollbar": "^3.0.5"
   }
 }
