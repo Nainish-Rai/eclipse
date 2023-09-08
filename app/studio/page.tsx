@@ -8,11 +8,16 @@ import { Button } from "@/components/ui/button";
 import GeneratedImages from "../components/GeneratedImages";
 import axios from "axios";
 import { AIGeneration } from "@/lib/types";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 function Studio({}: Props) {
-  const { data: session } = useSession();
+  const router = useRouter();
+  const { isLoaded, isSignedIn, user } = useUser();
+  console.log(user);
+
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState("kandinsky-2.2");
   const [quality, setQuality] = useState("512x512");
@@ -22,11 +27,11 @@ function Studio({}: Props) {
   const [selectedStyle, setSelectedStyle] = useState("");
 
   const [aiGenerations, setAiGenerations] = useState<AIGeneration[]>([]);
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push("/");
-  //   }
-  // }, [router, session]);
+  useEffect(() => {
+    if (isLoaded && !isSignedIn) {
+      router.push("/");
+    }
+  }, [isLoaded, isSignedIn, router]);
 
   const models = ["kandinsky-2.2", "sdxl"];
   const styles = [
@@ -78,7 +83,7 @@ function Studio({}: Props) {
   return (
     <main className="w-full lg:max-h-screen overflow-auto lg:h-screen p-0 m-0 bg-[url('../public/hero.png')]  ">
       <section className="w-full  h-full  flex flex-col  lg:px-12">
-        <Navbar isSignedIn={session!} />
+        <Navbar user={user!} />
 
         {/* content */}
         <div className="w-full lg:h-[92%] h-full m-0 p-1  pb-4  ">
@@ -151,7 +156,7 @@ function Studio({}: Props) {
                     onValueChange={(value) => setImagesCount(value[0])}
                     min={1}
                     defaultValue={[3]}
-                    max={10}
+                    max={4}
                     step={1}
                   />
                 </div>

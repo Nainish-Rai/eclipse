@@ -16,60 +16,72 @@ import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
+import { SignIn } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 export function CreateAccount() {
-  const { data: session } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    if (session) {
-      router.push("/studio");
-    }
-  }, [router, session]);
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/studio");
+  //   }
+  // }, [router, session]);
   const handleLogin = () => {
     signIn("google");
   };
   return (
-    <Card className="shadow-lg backdrop-blur-sm bg-black/60 shadow-black/40 w-96 rounded-xl">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">Create an account</CardTitle>
-        <CardDescription>
-          Enter your email below to create your account
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className="grid grid-cols-2 gap-6">
-          <Button variant="outline">
-            <Icons.gitHub className="mr-2 h-4 w-4" />
-            Github
-          </Button>
-          <Button onClick={handleLogin} variant="outline">
-            <Icons.google className="mr-2 h-4 w-4" />
-            Google
-          </Button>
-        </div>
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password">Password</Label>
-          <Input id="password" type="password" />
-        </div>
-      </CardContent>
-      <CardFooter>
-        <Button className="w-full backdrop-blur-sm ">Create account</Button>
-      </CardFooter>
-    </Card>
+    // <Card className="shadow-lg backdrop-blur-sm bg-black/60 shadow-black/40 w-96 rounded-xl">
+
+    //   <CardHeader className="space-y-1">
+    //     <CardTitle className="text-2xl">Create an account</CardTitle>
+    //     <CardDescription>
+    //       Enter your email below to create your account
+    //     </CardDescription>
+    //   </CardHeader>
+    //   <CardContent className="grid gap-4">
+    //     <div className="grid grid-cols-2 gap-6">
+    //       <Button variant="outline">
+    //         <Icons.gitHub className="mr-2 h-4 w-4" />
+    //         Github
+    //       </Button>
+    //       <Button onClick={handleLogin} variant="outline">
+    //         <Icons.google className="mr-2 h-4 w-4" />
+    //         Google
+    //       </Button>
+    //     </div>
+    //     <div className="relative">
+    //       <div className="absolute inset-0 flex items-center">
+    //         <span className="w-full border-t" />
+    //       </div>
+    //       <div className="relative flex justify-center text-xs uppercase">
+    //         <span className="bg-background px-2 text-muted-foreground">
+    //           Or continue with
+    //         </span>
+    //       </div>
+    //     </div>
+    //     <div className="grid gap-2">
+    //       <Label htmlFor="email">Email</Label>
+    //       <Input id="email" type="email" placeholder="m@example.com" />
+    //     </div>
+    //     <div className="grid gap-2">
+    //       <Label htmlFor="password">Password</Label>
+    //       <Input id="password" type="password" />
+    //     </div>
+    //   </CardContent>
+    //   <CardFooter>
+    //     <Button className="w-full backdrop-blur-sm ">Create account</Button>
+    //   </CardFooter>
+    // </Card>
+    <SignIn
+      redirectUrl="/studio"
+      appearance={{
+        baseTheme: dark,
+        elements: {
+          card: "shadow-lg backdrop-blur-sm bg-black/60 shadow-black/40 w-96 rounded-xl",
+          formButtonPrimary:
+            "bg-neutral-500/70 backdrop-blur-sm hover:bg-neutral-400",
+        },
+      }}
+    />
   );
 }

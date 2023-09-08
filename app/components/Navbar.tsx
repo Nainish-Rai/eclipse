@@ -9,20 +9,23 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { signOut, signIn } from "next-auth/react";
-import { Session } from "next-auth";
+
+import { SignOutButton, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 type Props = {
-  isSignedIn?: Session;
+  user: any;
 };
 
-function Navbar({ isSignedIn }: Props) {
-  const handleSignOut = () => {
-    signOut();
-  };
+function Navbar({ user }: Props) {
+  const router = useRouter();
+  // const handleSignOut = () => {
+  //   signOut();
+  // };
 
-  const handleSignIn = () => {
-    signIn("google");
-  };
+  // const handleSignIn = () => {
+  //   signIn("google");
+  // };
   return (
     <nav className="w-full  h-[8%] flex items-center justify-between p-2">
       <h1 className=" text-lg  bg-neutral-900/60 border  backdrop-blur rounded-full  px-6 p-2 ">
@@ -45,25 +48,22 @@ function Navbar({ isSignedIn }: Props) {
         {/* right side */}
         <div className="flex space-x-2">
           <div className="flex items-center border bg-neutral-900/60 backdrop-blur rounded-full ">
-            {isSignedIn ? (
+            {user != undefined ? (
               <div className="flex items-center px-4 p-2 space-x-2">
                 <div className="relative w-7 aspect-square">
-                  {isSignedIn?.user?.image && (
+                  {user?.imageUrl && (
                     <Image
-                      src={isSignedIn?.user?.image}
+                      src={user?.imageUrl}
                       alt="pfp"
                       fill
                       className="rounded-full"
                     />
                   )}
                 </div>
-                <h3>{isSignedIn?.user?.name}</h3>
+                <h3>{user?.fullName}</h3>
               </div>
             ) : (
-              <div
-                className="px-4 p-2 bg-white/80 border backdrop-blur-sm rounded-full text-black cursor-pointer hover:text-pink-600"
-                onClick={handleSignIn}
-              >
+              <div className="px-4 p-2 bg-white/80 border backdrop-blur-sm rounded-full text-black cursor-pointer hover:text-pink-600">
                 Sign in
               </div>
             )}
@@ -84,11 +84,14 @@ function Navbar({ isSignedIn }: Props) {
               <DropdownMenuItem className="cursor-pointer">
                 Team
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={handleSignOut}
-                className="cursor-pointer"
-              >
-                Sign out
+              <DropdownMenuItem className="cursor-pointer">
+                <SignOutButton
+                  signOutCallback={() => {
+                    router.push("/");
+                  }}
+                >
+                  Sign out
+                </SignOutButton>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
