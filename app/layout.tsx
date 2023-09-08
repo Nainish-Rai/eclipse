@@ -1,8 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import AuthProvider from "@/context/AuthProvider";
-import ApolloWrapper from "@/lib/ApolloWrapper";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark max-h-screen">
-      <AuthProvider>
-        <body className={inter.className}>
-          <ApolloWrapper>{children}</ApolloWrapper>
-        </body>
-      </AuthProvider>
+      <ClerkProvider>
+        <body className={inter.className}>{children}</body>
+      </ClerkProvider>
     </html>
   );
 }
