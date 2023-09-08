@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import AuthProvider from "@/context/AuthProvider";
 import ApolloWrapper from "@/lib/ApolloWrapper";
+import Navbar from "@/app/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en" className="dark max-h-screen">
       <AuthProvider>
         <body className={inter.className}>
-          <ApolloWrapper>{children}</ApolloWrapper>
+          <ApolloWrapper>
+            <Navbar />
+              {children}
+          </ApolloWrapper>
         </body>
       </AuthProvider>
     </html>

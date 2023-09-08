@@ -1,4 +1,6 @@
+"use client"
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,13 +11,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { signOut, signIn } from "next-auth/react";
-import { Session } from "next-auth";
+import Link from "next/link";
 
-type Props = {
-  isSignedIn?: Session;
-};
 
-function Navbar({ isSignedIn }: Props) {
+function Navbar() {
+  const { data: session } = useSession();
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push("/");
+  //   }
+  // }, [router, session]);
   const handleSignOut = () => {
     signOut();
   };
@@ -30,34 +35,34 @@ function Navbar({ isSignedIn }: Props) {
       </h1>
       <div className="hidden md:flex">
         <ul className="flex  bg-neutral-900/60 border  backdrop-blur rounded-full px-6 p-2 space-x-12">
-          <li className="cursor-pointer hover:text-pink-600 duration-150">
+          <Link href="/" className="cursor-pointer hover:text-pink-600 duration-150">
             Home
-          </li>
-          <li className="cursor-pointer hover:text-pink-600 duration-150">
+          </Link>
+          <Link href="/studio" className="cursor-pointer hover:text-pink-600 duration-150">
             Studio
-          </li>
-          <li className="cursor-pointer hover:text-pink-600 duration-150">
-            MarketPlace
-          </li>
+          </Link>
+          <Link href="/expore" className="cursor-pointer hover:text-pink-600 duration-150">
+            Explore
+          </Link>
         </ul>
       </div>
       <div>
         {/* right side */}
         <div className="flex space-x-2">
           <div className="flex items-center border bg-neutral-900/60 backdrop-blur rounded-full ">
-            {isSignedIn ? (
+            {session ? (
               <div className="flex items-center px-4 p-2 space-x-2">
                 <div className="relative w-7 aspect-square">
-                  {isSignedIn?.user?.image && (
+                  {session?.user?.image && (
                     <Image
-                      src={isSignedIn?.user?.image}
+                      src={session?.user?.image}
                       alt="pfp"
                       fill
                       className="rounded-full"
                     />
                   )}
                 </div>
-                <h3>{isSignedIn?.user?.name}</h3>
+                <h3>{session?.user?.name}</h3>
               </div>
             ) : (
               <div

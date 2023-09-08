@@ -1,7 +1,5 @@
 "use client";
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
@@ -12,7 +10,6 @@ import { AIGeneration } from "@/lib/types";
 type Props = {};
 
 function Studio({}: Props) {
-  const { data: session } = useSession();
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState("kandinsky-2.2");
   const [quality, setQuality] = useState("512x512");
@@ -22,11 +19,6 @@ function Studio({}: Props) {
   const [selectedStyle, setSelectedStyle] = useState("");
 
   const [aiGenerations, setAiGenerations] = useState<AIGeneration[]>([]);
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.push("/");
-  //   }
-  // }, [router, session]);
 
   const models = ["kandinsky-2.2", "sdxl"];
   const styles = [
@@ -67,14 +59,15 @@ function Studio({}: Props) {
         return [newGen, ...prev]
       })
       setLoading(false);
+    }).catch(err => {
+          setLoading(false);
+        alert(`${err}`)
     });
   };
 
   return (
     <main className="w-full lg:max-h-screen overflow-auto lg:h-screen p-0 m-0 bg-[url('../public/hero.png')]  ">
       <section className="w-full  h-full  flex flex-col  lg:px-12">
-        <Navbar isSignedIn={session!} />
-
         {/* content */}
         <div className="w-full lg:h-[92%] h-full m-0 p-1  pb-4  ">
           <div className=" flex flex-col h-full  lg:flex-row  gap-2 items-center">
