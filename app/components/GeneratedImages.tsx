@@ -1,15 +1,15 @@
-import Image from "next/image";
+import { AIGeneration } from "@/lib/types";
+import AIImage from "./AIImage";
+
 type Props = {
   isLoading: boolean;
-  content: {
-    url: string;
-  }[];
+  generations: AIGeneration[]
 };
 
-function GeneratedImages({ content, isLoading }: Props) {
+function GeneratedImages({ generations, isLoading }: Props) {
   return (
     <div className="bg-neutral-900/50 border w-full lg:w-[70%] backdrop-blur mt-4 lg:mt-0 rounded-3xl p-4 max-h-full h-full  overflow-y-scroll scrollbar-hide ">
-      <div className="">GeneratedImages</div>
+      <h2 className="mb-2">Generated Images</h2>
 
       {isLoading && (
         <div className="flex  sm:flex-wrap flex-col sm:flex-row  mt-4">
@@ -24,21 +24,18 @@ function GeneratedImages({ content, isLoading }: Props) {
           </div>
         </div>
       )}
-      <div className="flex  sm:flex-wrap flex-col sm:flex-row  mt-1">
-        {content.map((item) => {
+      <div className="flex flex-col gap-4">
+        {generations.map((generation) => {
           return (
-            <div
-              className=" lg:w-1/3 sm:w-1/2 w-full aspect-square p-2"
-              key={item.url}
-            >
-              <div className="relative w-full aspect-square">
-                <Image
-                  src={item.url}
-                  alt="image"
-                  className="rounded-2xl"
-                  fill
-                />
-              </div>
+            <div key={generation.prompt}>
+                <h3 className="bg-black/20 p-0.5 px-3 rounded-xl italic text-white/60">
+                    {generation.prompt}
+                </h3>
+                <ul className="flex sm:flex-wrap flex-col sm:flex-row">
+                    {generation.generated.map(item => (
+                        <AIImage url={item.url} key={item.url} prompt={generation.prompt} />
+                    ))}
+                </ul>
             </div>
           );
         })}
