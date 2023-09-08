@@ -15,6 +15,7 @@ function Studio({}: Props) {
   const { data: session } = useSession();
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState("kandinsky-2.2");
+  const [slider, setSlider] = useState(false);
   const [quality, setQuality] = useState("512x512");
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +40,16 @@ function Studio({}: Props) {
     "Vaporware",
     "Pixel Art",
   ];
+
+  const handleSlider = (model: string) => {
+    if (model === "kandinsky-2.2") {
+      setSlider(false);
+    } else if (model === "sdxl") {
+      setSlider(true);
+    } else {
+      console.log("Slider error");
+    }
+  }
 
   const generateImages = async () => {
     let fullPrompt = prompt !== "" ?
@@ -106,6 +117,7 @@ function Studio({}: Props) {
                       variant="outline"
                       onClick={() => {
                         model === item ? setModel("") : setModel(item);
+                        handleSlider(item);
                       }}
                       key={item}
                     >
@@ -134,7 +146,7 @@ function Studio({}: Props) {
                     ))}
                   </div>
                 </div>
-                <div className="w-full p-2 mt-4">
+                <div className={`${slider ? "" : "hidden"} w-full p-2 mt-4`}>
                   <h4 className="text-sm ">
                     Number of Images{" "}
                     <span className="bg-neutral-800 mx-2 rounded-full  px-3 p-1">
@@ -142,7 +154,7 @@ function Studio({}: Props) {
                     </span>
                   </h4>
                   <Slider
-                    className="mt-4 outline-none  opacity-70"
+                    className={`${slider ? "" : "hidden"} mt-4 outline-none  opacity-70`}
                     onValueChange={(value) => setImagesCount(value[0])}
                     min={1}
                     defaultValue={[3]}
