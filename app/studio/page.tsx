@@ -9,6 +9,7 @@ import GeneratedImages from "../components/GeneratedImages";
 import { useRouter } from "next/navigation";
 import { useQuery, gql, useMutation } from "@apollo/client";
 import axios from "axios";
+import { AIGeneration } from "@/lib/types";
 
 type Props = {};
 
@@ -23,7 +24,7 @@ function Studio({}: Props) {
   const [imagesCount, setImagesCount] = useState(3);
   const [selectedStyle, setSelectedStyle] = useState("");
 
-  const [generatedImagesArray, setGeneratedImagesArray] = useState([]);
+  const [aiGenerations, setAiGenerations] = useState<AIGeneration[]>([]);
   // useEffect(() => {
   //   if (!session) {
   //     router.push("/");
@@ -43,10 +44,15 @@ function Studio({}: Props) {
   ];
 
   const generateImages = async () => {
+    let fullPrompt = prompt !== "" ?
+        `${prompt} ${selectedStyle !== "" ? "in " + selectedStyle + " style": ""}`
+        :"";
+    setPrompt(fullPrompt)
+
     const reqBody = {
       model: model,
       n: imagesCount,
-      prompt: `${prompt} in ${selectedStyle} style`,
+      prompt: fullPrompt,
       // size: quality,
     };
     if (prompt === "") {
@@ -55,16 +61,20 @@ function Studio({}: Props) {
     }
     setLoading(true);
 
-    console.log(reqBody);
     await axios.post("api/imagesgeneration", reqBody).then((res) => {
-      console.log(res.data.data);
-      setGeneratedImagesArray((prev) => res.data.data.concat(prev));
+      setAiGenerations((prev) => {
+        let newGen: AIGeneration = {
+            prompt,
+            generated: res.data.data
+        };
+        return [newGen, ...prev]
+      })
       setLoading(false);
     });
   };
 
   return (
-    <main className="w-full lg:h-screen p-0 m-0 bg-[url('../public/hero.png')]  ">
+    <main className="w-full lg:max-h-screen overflow-auto lg:h-screen p-0 m-0 bg-[url('../public/hero.png')]  ">
       <section className="w-full  h-full  flex flex-col  lg:px-12">
         <Navbar isSignedIn={session!} />
 
@@ -157,7 +167,7 @@ function Studio({}: Props) {
 
             <GeneratedImages
               isLoading={loading}
-              content={generatedImagesArray}
+              generations={aiGenerations}
             />
           </div>
         </div>
