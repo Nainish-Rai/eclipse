@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import {v2 as cloud} from "cloudinary";
+import prisma from "@/lib/prismadb";
 
 export async function POST(request: NextRequest) {
     const body = await request.json()
@@ -16,6 +17,12 @@ export async function POST(request: NextRequest) {
     })
 
     let res = await cloud.uploader.upload(url);
+    let image = prisma.image.create({
+        data: {
+            url: res.url,
+            public_id: res.public_id,
+        }
+    })
     let imageDetails = {
         url: res.secure_url,
         public_id: res.public_id,
