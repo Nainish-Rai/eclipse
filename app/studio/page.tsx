@@ -41,10 +41,13 @@ function Studio({}: Props) {
   ];
 
   const generateImages = async () => {
-    let fullPrompt = prompt !== "" ?
-        `${prompt} ${selectedStyle !== "" ? "in " + selectedStyle + " style": ""}`
-        :"";
-    setPrompt(prompt)
+    let fullPrompt =
+      prompt !== ""
+        ? `${prompt} ${
+            selectedStyle !== "" ? "in " + selectedStyle + " style" : ""
+          }`
+        : "";
+    setPrompt(prompt);
 
     const reqBody = {
       model: model,
@@ -58,16 +61,18 @@ function Studio({}: Props) {
     }
     setLoading(true);
 
-    await axios.post("api/imagesgeneration", reqBody).then((res) => {
-      setAiGenerations((prev) => {
-        let newGen: AIGeneration = {
+    await axios
+      .post("https://eclipse-cho7.onrender.com/images", reqBody)
+      .then((res) => {
+        setAiGenerations((prev) => {
+          let newGen: AIGeneration = {
             prompt: fullPrompt,
-            generated: res.data.data
-        };
-        return [newGen, ...prev]
-      })
-      setLoading(false);
-    });
+            generated: res.data.data,
+          };
+          return [newGen, ...prev];
+        });
+        setLoading(false);
+      });
   };
 
   return (
@@ -162,10 +167,7 @@ function Studio({}: Props) {
             </div>
             {/* Right side */}
 
-            <GeneratedImages
-              isLoading={loading}
-              generations={aiGenerations}
-            />
+            <GeneratedImages isLoading={loading} generations={aiGenerations} />
           </div>
         </div>
       </section>
