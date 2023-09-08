@@ -24,11 +24,11 @@ function Studio({}: Props) {
   const [selectedStyle, setSelectedStyle] = useState("");
 
   const [generatedImagesArray, setGeneratedImagesArray] = useState([]);
-  useEffect(() => {
-    if (!session) {
-      router.push("/");
-    }
-  }, [router, session]);
+  // useEffect(() => {
+  //   if (!session) {
+  //     router.push("/");
+  //   }
+  // }, [router, session]);
 
   const models = ["kandinsky-2.2", "sdxl"];
   const styles = [
