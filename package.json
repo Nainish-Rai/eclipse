@@ -9,7 +9,9 @@
     "lint": "next lint",
     "compile": "graphql-codegen",
     "watch": "graphql-codegen -w",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@apollo/client": "^3.8.1",
