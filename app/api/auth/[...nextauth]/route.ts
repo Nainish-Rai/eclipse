@@ -62,10 +62,34 @@ const handler = NextAuth({
       },
     }),
   ],
+
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
   debug: process.env.NODE_ENV === "development",
+  callbacks: {
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          randomKey: token.randomKey,
+        },
+      };
+    },
+    jwt: ({ token, user }) => {
+      if (user) {
+        const u = user as unknown as any;
+        return {
+          ...token,
+          id: u.id,
+          randomKey: u.randomKey,
+        };
+      }
+      return token;
+    },
+  },
 });
 export { handler as GET, handler as POST };
