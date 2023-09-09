@@ -3,6 +3,7 @@ import React from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { GoDesktopDownload } from "react-icons/go";
 import axios from "axios";
+import { useUser } from "@clerk/nextjs";
 
 interface AIImageProps {
   url: string,
@@ -13,6 +14,7 @@ interface AIImageProps {
 export default function AIImage({ url, prompt, downloadOnly }: AIImageProps) {
   const [showOptions, setShowOptions] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
+  const { user } = useUser();
 
   function viewOptions() {
     setShowOptions(true)
@@ -38,7 +40,8 @@ export default function AIImage({ url, prompt, downloadOnly }: AIImageProps) {
   function uploadImage() {
     let reqBody = {
       url,
-      prompt
+      prompt,
+      email: user?.emailAddresses
     }
     axios.post("api/upload_image", reqBody)
       .then(res => {
