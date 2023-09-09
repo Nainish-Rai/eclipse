@@ -3,16 +3,7 @@ import axios from "axios";
 export const POST = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
-
-    // const response = await axios.post(
-    //   `${process.env.API_BASE!}/images/generations`,
-    //   reqBody,
-    //   {
-    //     headers: {
-    //       Authorization: `Bearer ${process.env.API_KEY!}`,
-    //     },
-    //   }
-    // );
+    const Authorization = `Bearer ${process.env.API_KEY!}`;
     const rawResponse = await fetch(
       `${process.env.API_BASE!}/images/generations`,
       {
@@ -20,7 +11,7 @@ export const POST = async (req: NextRequest) => {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.API_KEY!}`,
+          Authorization,
         },
         body: JSON.stringify(reqBody),
       }

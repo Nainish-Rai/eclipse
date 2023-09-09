@@ -51,11 +51,15 @@ function Studio({ }: Props) {
     }
     setLoading(true);
 
+    // const url = "https://eclipse-cho7.onrender.com/images";
+    const url = "api/imagesgeneration"
     await axios
-      .post("https://eclipse-cho7.onrender.com/images", reqBody)
+      .post(url, reqBody)
       .then((res) => {
         if (res.data.name && res.data.name === "AxiosError") {
           alert("Request failed")
+        } else if (res.data.detail && res.data.detail === "under maintenance") {
+          alert("Under maintainance")
         } else {
           setAiGenerations((prev) => {
             let newGen: AIGeneration = {
