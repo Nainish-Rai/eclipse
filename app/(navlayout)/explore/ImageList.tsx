@@ -75,14 +75,17 @@ export default function ImageList({ search }: ImageListProps) {
         {images.map(img => (
           <div key={img.id} className="backdrop-blur-sm rounded-3xl border border-white/5">
             <AIImage downloadOnly prompt={img.desc ?? ""} url={img.url} />
-            <div className="flex items-center gap-3 p-2">
-              <Image width={40} height={40}
-                className="rounded-full"
-                src={img.user?.image ?? avatarPlaceholder}
-                alt={img.user?.name ?? ""} />
-              <p className="text-sm italic text-white/50">
-                by <span className="font-semibold">{img.user?.name ?? "Anonymous"}</span>
-              </p>
+            <div className="p-2 line-clamp-2 text-white/70">
+              <p className="my-1 text-sm mb-2">{img.desc}</p>
+              <div className="flex items-center gap-3">
+                <Image width={40} height={40}
+                  className="rounded-full"
+                  src={img.user?.image ?? avatarPlaceholder}
+                  alt={img.user?.name ?? ""} />
+                <p className="text-sm italic text-white/50">
+                  by <span className="font-semibold">{img.user?.name ?? "Anonymous"}</span>
+                </p>
+              </div>
             </div>
           </div>
         ))}
