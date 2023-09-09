@@ -4,18 +4,20 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const url = String(searchParams.get("url"));
-  console.log(url)
   try {
-    let response = await axios.get(url, { responseType: "blob" })
+    axios.head(url)
+    let response = await axios.get(url, { responseType: "arraybuffer" })
     if (response.status === 200) {
+      const imgBuff = Buffer.from(response.data, "binary");
+      const headers = new Headers();
+      headers.set('Content-Type', response.headers['content-type'])
+      headers.set('Content-Length', imgBuff.length.toString())
       return new Response(
-        response.data,
+        imgBuff,
         {
           status: 200,
           statusText: "OK",
-          headers: {
-            "content-type": "image/jpeg",
-          }
+          headers
         }
       )
     } else {
