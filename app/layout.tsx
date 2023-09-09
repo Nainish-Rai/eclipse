@@ -18,7 +18,13 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" className="dark max-h-screen">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <main className={`
+              w-full lg:max-h-screen overflow-auto lg:h-screen
+              p-0 m-0 bg-[url('../public/hero.png')]`}>
+              {children}
+          </main>
+        </body>
       </html>
     </ClerkProvider>
   );

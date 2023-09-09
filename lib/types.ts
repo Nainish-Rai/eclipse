@@ -1,5 +1,5 @@
 export interface AIGeneration {
-    prompt: string,
+    prompt?: string,
     generated: {
         url: string
     }[]
