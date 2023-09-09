@@ -41,7 +41,7 @@ export default function AIImage({ url, prompt, downloadOnly }: AIImageProps) {
     let reqBody = {
       url,
       prompt,
-      email: user?.emailAddresses
+      email: user?.emailAddresses[0].emailAddress
     }
     axios.post("api/upload_image", reqBody)
       .then(res => {
