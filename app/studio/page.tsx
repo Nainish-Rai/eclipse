@@ -54,13 +54,17 @@ function Studio({ }: Props) {
     await axios
       .post("https://eclipse-cho7.onrender.com/images", reqBody)
       .then((res) => {
-        setAiGenerations((prev) => {
-          let newGen: AIGeneration = {
-            prompt: fullPrompt,
-            generated: res.data.data,
-          };
-          return [newGen, ...prev];
-        });
+        if (res.data.name && res.data.name === "AxiosError") {
+          alert("Request failed")
+        } else {
+          setAiGenerations((prev) => {
+            let newGen: AIGeneration = {
+              prompt: fullPrompt,
+              generated: res.data.data,
+            };
+            return [newGen, ...prev];
+          });
+        }
         setLoading(false);
       })
       .catch(err => {

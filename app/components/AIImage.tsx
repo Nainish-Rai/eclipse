@@ -6,10 +6,11 @@ import axios from "axios";
 
 interface AIImageProps {
   url: string,
-  prompt: string
+  prompt: string,
+  downloadOnly?: boolean
 }
 
-export default function AIImage({ url, prompt }: AIImageProps) {
+export default function AIImage({ url, prompt, downloadOnly }: AIImageProps) {
   const [showOptions, setShowOptions] = React.useState(false);
   const [saved, setSaved] = React.useState(false);
 
@@ -19,18 +20,19 @@ export default function AIImage({ url, prompt }: AIImageProps) {
   }
 
   function downloadImage() {
-    fetch(url, { method: "GET", mode: "no-cors" })
-      .then(res => res.blob())
-      .then(blob => {
+    console.log({url})
+    axios.get(`api/download?url=${url}`, { responseType: "blob"}).then(res => {
+        console.log(res)
+        console.log(res.data)
         const anchor = document.createElement("a");
         anchor.style.display = "none";
-        anchor.href = window.URL.createObjectURL(blob);
-        anchor.download = `${prompt}.jpg`
+        anchor.href = window.URL.createObjectURL(res.data);
+        anchor.download = `${prompt}.jpeg`
         document.body.appendChild(anchor)
         anchor.click()
         window.URL.revokeObjectURL(anchor.href)
         document.body.removeChild(anchor)
-      }).catch(err => alert(err))
+    }).catch(err => alert(err))
   }
 
   function uploadImage() {
@@ -51,7 +53,7 @@ export default function AIImage({ url, prompt }: AIImageProps) {
       onClick={viewOptions}
       onMouseOver={viewOptions}
       onMouseLeave={() => setShowOptions(false)}
-      className="lg:w-1/3 sm:w-1/2 w-full aspect-square p-2 relative z-0">
+      className="w-full aspect-square p-2 relative z-0">
       <div className={`
                     transition ${showOptions ? "opacity-1" : "opacity-0"}
                     bg-black/50 shadow-lg w-fit px-2 py-1 rounded-xl
@@ -61,7 +63,7 @@ export default function AIImage({ url, prompt }: AIImageProps) {
           title="Downolad to device" onClick={downloadImage}>
           <GoDesktopDownload size={20} />
         </button>
-        {!saved && (
+        {downloadOnly || !saved && (
           <button onClick={uploadImage} className="text-white/70 hover:text-green-600 transition"
             title="Save to cloud">
             <AiOutlineCloudUpload size={25} />

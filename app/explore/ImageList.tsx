@@ -3,8 +3,7 @@
 import axios from "axios";
 import React from "react"
 import { ImagesResponse, ResponseImage } from "./types";
-import Image from "next/image";
-import { ImageSkeleton } from "../components";
+import { AIImage, ImageSkeleton } from "../components";
 
 interface ImageListProps {
   search?: string
@@ -27,15 +26,15 @@ export default function ImageList({ search }: ImageListProps) {
   }, [search])
 
   return (
-    <ul className="flex w-full gap-3 flex-wrap">
-      {images.map(img => (
-        <div key={img.id}>
-          <Image className="rounded-xl" src={img.url} alt={img.desc!} width={240} height={240} />
-        </div>
-      ))}
+    <div>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full gap-3">
+        {images.map(img => (
+            <AIImage downloadOnly key={img.id} prompt={img.desc ?? ""} url={img.url}/>
+        ))}
+      </ul>
       {loading && (
         <ImageSkeleton count={10} />
       )}
-    </ul>
+    </div>
   )
 }

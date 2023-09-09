@@ -22,9 +22,9 @@ function GeneratedImages({ generations, isLoading }: Props) {
                 <h3 className="bg-black/20 p-0.5 px-3 rounded-xl italic text-white/60">
                     {generation.prompt}
                 </h3>
-                <ul className="flex sm:flex-wrap flex-col sm:flex-row">
+                <ul className="grid grid-cols-2 md:grid-cols-3">
                     {generation.generated.map(item => (
-                        <AIImage url={item.url} key={item.url} prompt={generation.prompt} />
+                        <AIImage url={item.url} key={item.url} prompt={generation.prompt ?? ""} />
                     ))}
                 </ul>
             </div>
