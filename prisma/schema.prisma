@@ -2,53 +2,54 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id             Int    @id @default(autoincrement())
-    name           String?
-    email          String?   @unique
-    emailVerified  DateTime?
-    image          String?
-    hashedPassword String?
-    createdAt      DateTime  @default(now())
-    updatedAt      DateTime  @updatedAt
+  id             Int       @id @default(autoincrement())
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-    accounts Account[]
-    images   Image[]
+  accounts Account[]
+  images   Image[]
 }
 
 model Account {
-    id                Int  @id @default(autoincrement())
-    userId            Int
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.VarChar(255)
-    access_token      String? @db.VarChar(255)
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.VarChar(255)
-    session_state     String?
+  id                Int     @id @default(autoincrement())
+  userId            Int
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.VarChar(255)
+  access_token      String? @db.VarChar(255)
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.VarChar(255)
+  session_state     String?
 
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    @@unique([provider, providerAccountId])
+  @@unique([provider, providerAccountId])
 }
 
 model Image {
-    id          Int  @id @default(autoincrement())
-    url         String
-    public_id   String
-    desc        String? @db.VarChar(255)
-    user_id     Int?
+  id        Int      @id @default(autoincrement())
+  url       String
+  public_id String
+  desc      String?  @db.VarChar(255)
+  user_id   Int?
+  createdAt DateTime @default(now())
 
-    user User? @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }

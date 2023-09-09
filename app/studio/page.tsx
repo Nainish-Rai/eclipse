@@ -152,7 +152,6 @@ function Studio({ }: Props) {
             </div>
           </div>
           {/* Right side */}
-
           <GeneratedImages isLoading={loading} generations={aiGenerations} />
         </div>
       </div>

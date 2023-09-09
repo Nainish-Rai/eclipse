@@ -1,5 +1,6 @@
 import { AIGeneration } from "@/lib/types";
 import AIImage from "./AIImage";
+import { ImageSkeleton } from ".";
 
 type Props = {
   isLoading: boolean;
@@ -12,17 +13,7 @@ function GeneratedImages({ generations, isLoading }: Props) {
       <h2 className="mb-2">Generated Images</h2>
 
       {isLoading && (
-        <div className="flex  sm:flex-wrap flex-col sm:flex-row  mt-4">
-          <div className="animate-pulse  flex p-2 space-x-4 w-1/3 ">
-            <div className="aspect-square w-full  bg-neutral-700/50 rounded-2xl"></div>
-          </div>
-          <div className="animate-pulse  flex p-2 space-x-4 w-1/3 ">
-            <div className="aspect-square w-full  bg-neutral-700/50 rounded-2xl"></div>
-          </div>
-          <div className="animate-pulse  flex p-2 space-x-4 w-1/3 ">
-            <div className="aspect-square w-full  bg-neutral-700/50 rounded-2xl"></div>
-          </div>
-        </div>
+        <ImageSkeleton />
       )}
       <div className="flex flex-col gap-4">
         {generations.map((generation) => {
