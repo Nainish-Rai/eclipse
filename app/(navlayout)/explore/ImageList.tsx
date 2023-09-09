@@ -3,7 +3,7 @@
 import axios from "axios";
 import React from "react"
 import { ImagesResponse, ResponseImage } from "./types";
-import { AIImage, ImageSkeleton } from "../components";
+import { AIImage, ImageSkeleton } from "@/app/components";
 
 interface ImageListProps {
   search?: string

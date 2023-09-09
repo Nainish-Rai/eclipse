@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
 export const POST = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();

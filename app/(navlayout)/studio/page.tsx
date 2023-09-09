@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import GeneratedImages from "../components/GeneratedImages";
+import { GeneratedImages } from "@/app/components";
 import axios from "axios";
 import { AIGeneration } from "@/lib/types";
 

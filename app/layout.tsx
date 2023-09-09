@@ -2,7 +2,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { AuthWrapper } from "@/app/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,9 +22,7 @@ export default function RootLayout({
           <main className={`
               w-full lg:max-h-screen overflow-auto lg:h-screen
               p-0 m-0 bg-[url('../public/hero.png')]`}>
-            <AuthWrapper>
               {children}
-            </AuthWrapper>
           </main>
         </body>
       </html>
