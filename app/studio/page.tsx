@@ -62,7 +62,11 @@ function Studio({ }: Props) {
           return [newGen, ...prev];
         });
         setLoading(false);
-      });
+      })
+      .catch(err => {
+        setLoading(false)
+        alert(err)
+      })
   };
 
   return (

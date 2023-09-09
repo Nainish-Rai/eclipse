@@ -14,26 +14,23 @@ export default function ImageList({ search }: ImageListProps) {
   const [images, setImages] = React.useState<ResponseImage[]>([]);
   const [loading, setLoading] = React.useState(true);
 
-  const getImages = React.useCallback(async () => {
-    let imgRes = await axios.get<ImagesResponse>("api/images?page=2").then(data => data.data)
-    if (search) {
-      setImages(imgRes.images)
-    } else {
-      setImages([...images, ...imgRes.images])
-    }
-  }, [search, images])
-
   React.useEffect(() => {
-    getImages().then(() => {
-      setLoading(false);
-    })
-  }, [search, getImages])
+    axios.get<ImagesResponse>("api/images?page=2")
+      .then(data => {
+        if (search) {
+          setImages(data.data.images)
+        } else {
+          setImages(curr => [...curr, ...data.data.images])
+        }
+        setLoading(false)
+      })
+  }, [search])
 
   return (
-    <ul>
+    <ul className="flex w-full gap-3 flex-wrap">
       {images.map(img => (
         <div key={img.id}>
-          <Image src={img.url} alt={img.desc!} width={240} height={240} />
+          <Image className="rounded-xl" src={img.url} alt={img.desc!} width={240} height={240} />
         </div>
       ))}
       {loading && (

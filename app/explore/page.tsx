@@ -9,7 +9,7 @@ export default function ExplorePage() {
 
   const handleSearch = () => searchRef.current.value !== "" && setSearch(searchRef.current.value);
   return (
-    <section className="w-full  h-full  flex flex-col  lg:px-12">
+    <section className="w-full gap-3 h-full  flex flex-col  lg:px-12">
       <div className="flex backdrop-blur-sm w-full max-w-4xl self-center px-1 gap-2 border border-white/5 rounded-3xl items-center">
         <input ref={searchRef} type="text" placeholder="Search prompt"
           className="bg-transparent p-3 outline-none w-full text-md"/>
