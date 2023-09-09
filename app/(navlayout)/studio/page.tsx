@@ -9,7 +9,7 @@ import { AIGeneration } from "@/lib/types";
 
 type Props = {};
 
-function Studio({ }: Props) {
+function Studio({}: Props) {
   const [prompt, setPrompt] = useState("");
   const [model, setModel] = useState("kandinsky-2.2");
   const [loading, setLoading] = useState(false);
@@ -34,8 +34,9 @@ function Studio({ }: Props) {
   const generateImages = async () => {
     let fullPrompt =
       prompt !== ""
-        ? `${prompt} ${selectedStyle !== "" ? "in " + selectedStyle + " style" : ""
-        }`
+        ? `${prompt} ${
+            selectedStyle !== "" ? "in " + selectedStyle + " style" : ""
+          }`
         : "";
     setPrompt(prompt);
 
@@ -52,14 +53,18 @@ function Studio({ }: Props) {
     setLoading(true);
 
     // const url = "https://eclipse-cho7.onrender.com/images";
-    const url = "api/imagesgeneration"
+    const url = "https://gpt.darkcoder15.tk/v1/images/generations";
     await axios
-      .post(url, reqBody)
+      .post(url, reqBody, {
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY!}`,
+        },
+      })
       .then((res) => {
         if (res.data.name && res.data.name === "AxiosError") {
-          alert("Request failed")
+          alert("Request failed");
         } else if (res.data.detail && res.data.detail === "under maintenance") {
-          alert("Under maintainance")
+          alert("Under maintainance");
         } else {
           setAiGenerations((prev) => {
             let newGen: AIGeneration = {
@@ -71,15 +76,14 @@ function Studio({ }: Props) {
         }
         setLoading(false);
       })
-      .catch(err => {
-        setLoading(false)
-        alert(err)
-      })
+      .catch((err) => {
+        setLoading(false);
+        alert(err);
+      });
   };
 
   return (
     <section className="w-full  h-full  flex flex-col  lg:px-12">
-
       {/* content */}
       <div className="w-full lg:h-[92%] h-full m-0 p-1  pb-4  ">
         <div className=" flex flex-col h-full  lg:flex-row  gap-2 items-center">
@@ -105,8 +109,9 @@ function Studio({ }: Props) {
                 <h4 className="ml-2 mb-2 text-sm">Select Model</h4>
                 {models.map((item) => (
                   <Badge
-                    className={` ${model === item ? "bg-neutral-700" : ""
-                      } cursor-pointer hover:bg-neutral-800 m-1 p-2 px-4`}
+                    className={` ${
+                      model === item ? "bg-neutral-700" : ""
+                    } cursor-pointer hover:bg-neutral-800 m-1 p-2 px-4`}
                     variant="outline"
                     onClick={() => {
                       model === item ? setModel("") : setModel(item);
@@ -122,8 +127,9 @@ function Studio({ }: Props) {
                 <div className="mt-2">
                   {styles.map((style) => (
                     <Badge
-                      className={`cursor-pointer ${selectedStyle === style ? "bg-neutral-700" : ""
-                        } hover:bg-neutral-800 m-1 p-2 px-4`}
+                      className={`cursor-pointer ${
+                        selectedStyle === style ? "bg-neutral-700" : ""
+                      } hover:bg-neutral-800 m-1 p-2 px-4`}
                       variant="outline"
                       key={style}
                       onClick={() => {
