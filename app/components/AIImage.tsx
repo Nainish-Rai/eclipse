@@ -43,14 +43,11 @@ export default function AIImage({url, prompt}: AIImageProps) {
         }
         axios.post("api/upload_image", reqBody)
             .then(res => {
-                console.log(res.data)
-                alert("Save successfull")
+                alert(`Success: saved as ${res.data.desc}`)
                 setSaved(true)
             })
-            .catch(err => alert(`Save Error: failed to save, Image expired`))
+            .catch(err => alert(`Save Error: Failed to save ${err}`))
     }
-
-    console.log({url})
 
     return (
         <div

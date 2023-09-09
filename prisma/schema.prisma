@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-    provider = "mongodb"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
 model User {
-    id             String    @id @default(auto()) @map("_id") @db.ObjectId
+    id             Int    @id @default(autoincrement())
     name           String?
     email          String?   @unique
     emailVerified  DateTime?
@@ -25,17 +25,17 @@ model User {
 }
 
 model Account {
-    id                String  @id @default(auto()) @map("_id") @db.ObjectId
-    userId            String  @db.ObjectId
+    id                Int  @id @default(autoincrement())
+    userId            Int
     type              String
     provider          String
     providerAccountId String
-    refresh_token     String? @db.String
-    access_token      String? @db.String
+    refresh_token     String? @db.VarChar(255)
+    access_token      String? @db.VarChar(255)
     expires_at        Int?
     token_type        String?
     scope             String?
-    id_token          String? @db.String
+    id_token          String? @db.VarChar(255)
     session_state     String?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -44,11 +44,11 @@ model Account {
 }
 
 model Image {
-    id          String  @id @default(auto()) @map("_id") @db.ObjectId
+    id          Int  @id @default(autoincrement())
     url         String
     public_id   String
-    desc        String? @db.String
-    user_id     String?  @db.ObjectId
+    desc        String? @db.VarChar(255)
+    user_id     Int?
 
     user User? @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
