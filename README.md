@@ -1,34 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<h1>Eclipse: AI Image Generation and Sharing Marketplace</h1><p>Eclipse is an open-source web application that leverages the power of AI to generate and share stunning images. Built with modern technologies including Next.js, Tailwind CSS, Prisma, Postgres, and Clerk Auth, Eclipse offers a user-friendly platform for creating, sharing, and discovering AI-generated artwork.</p><h2>Features</h2><h3>1. Image Generation Models and Styles</h3><p>Eclipse boasts multiple image generation models and styles, allowing users to experiment and create unique images. With a diverse range of AI models at your disposal, the possibilities are endless.</p><h3>2. Image Sharing and Downloading</h3><p>Users can easily share and download the AI-generated images they create. Eclipse makes it simple to showcase your creations to the world and download them for personal or professional use.</p><h3>3. Marketplace</h3><p>Discover and explore the creations of other Eclipse users in the built-in marketplace. From abstract art to realistic landscapes, Eclipse's marketplace is a hub for creativity and inspiration.</p><h3>4. Sleek UI Design</h3><p>Our modern and practical user interface, meticulously designed from scratch in Figma, ensures an enjoyable and intuitive experience. Eclipse's UI is not only visually appealing but also optimized for seamless navigation.</p><h2>Technologies Used</h2><p>Eclipse harnesses the following technologies to deliver a powerful and feature-rich experience:</p><ul><li><strong>Next.js</strong>: A React framework for building fast and scalable web applications.</li><li><strong>Tailwind CSS</strong>: A utility-first CSS framework for creating stylish and responsive designs with ease.</li><li><strong>Prisma</strong>: A database toolkit for Node.js and TypeScript, simplifying database access and management.</li><li><strong>Postgres</strong>: A powerful open-source relational database system, providing robust data storage.</li><li><strong>Clerk Auth</strong>: A secure authentication and authorization service that ensures user data is protected.</li></ul><h2>Getting Started</h2><p>To run Eclipse locally for development or testing purposes, follow these steps:</p><ol><li><p>Clone this repository:</p><pre><div class="bg-black rounded-md mb-4"><div class="flex items-center relative text-gray-200 bg-gray-800 px-4 py-2 text-xs font-sans justify-between rounded-t-md"><span>bash</span><button class="flex ml-auto gap-2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>Copy code</button></div><div class="p-4 overflow-y-auto"><code class="!whitespace-pre hljs language-bash">git <span class="hljs-built_in">clone</span> https://github.com/your-username/eclipse.git
+</code></div></div></pre></li><li><p>Install dependencies:</p><pre><div class="bg-black rounded-md mb-4"><div class="flex items-center relative text-gray-200 bg-gray-800 px-4 py-2 text-xs font-sans justify-between rounded-t-md"><span>bash</span><button class="flex ml-auto gap-2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>Copy code</button></div><div class="p-4 overflow-y-auto"><code class="!whitespace-pre hljs language-bash"><span class="hljs-built_in">cd</span> eclipse
+npm install
+</code></div></div></pre></li><li><p>Set up your database by configuring Prisma with your Postgres connection.</p></li><li><p>Configure Clerk Auth to handle user authentication and authorization.</p></li><li><p>Start the development server:</p><pre><div class="bg-black rounded-md mb-4"><div class="flex items-center relative text-gray-200 bg-gray-800 px-4 py-2 text-xs font-sans justify-between rounded-t-md"><span>bash</span><button class="flex ml-auto gap-2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>Copy code</button></div><div class="p-4 overflow-y-auto"><code class="!whitespace-pre hljs language-bash">npm run dev
+</code></div></div></pre></li><li><p>Open your browser and navigate to <code>http://localhost:3000</code> to access Eclipse.</p></li></ol><h2>Contributing</h2><p>We welcome contributions from the community! If you'd like to contribute to Eclipse, please follow our <a href="CONTRIBUTING.md" target="_new">Contribution Guidelines</a> to get started.</p><h2>License</h2><p>Eclipse is licensed under the <a href="LICENSE" target="_new">MIT License</a>.</p><h2>Support</h2><p>If you encounter any issues or have questions, feel free to <a href="https://github.com/your-username/eclipse/issues" target="_new">open an issue</a> on our GitHub repository. Our community and maintainers are here to help!</p><hr><p>Eclipse is an exciting project that combines the latest AI technologies with a user-friendly interface to empower creativity. We look forward to seeing the incredible artwork generated and shared by our users. Enjoy using Eclipse!</p>
