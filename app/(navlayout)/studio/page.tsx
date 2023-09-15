@@ -52,10 +52,10 @@ function Studio({}: Props) {
     }
     setLoading(true);
 
-    // const url = "https://eclipse-cho7.onrender.com/images";
-    const url = "https://gpt.darkcoder15.tk/v1/images/generations";
+    const url = process.env.NEXT_PUBLIC_API_URL;
+
     await axios
-      .post(url, reqBody, {
+      .post(url!, reqBody, {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY!}`,
         },
